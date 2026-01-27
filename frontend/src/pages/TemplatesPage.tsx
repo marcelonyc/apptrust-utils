@@ -499,7 +499,7 @@ const TemplatesPage = () => {
                         <RegoEditor value={formState.rego} onChange={(value) => setFormState({ ...formState, rego: value })} />
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <h3 style={{ margin: 0, fontSize: "16px" }}>Predicate / Attestation</h3>
+                        <h3 style={{ margin: 0, fontSize: "16px" }}>Attestation (Exported from AppTrust)</h3>
                         <textarea
                             value={predicateText}
                             onChange={(event) => {

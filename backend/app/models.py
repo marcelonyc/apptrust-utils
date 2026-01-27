@@ -68,6 +68,7 @@ class Template(SQLModel, table=True):
         sa_relationship_kwargs={
             "primaryjoin": "Template.id==TemplateVersion.template_id",
             "foreign_keys": "TemplateVersion.template_id",
+            "cascade": "all, delete-orphan",
         },
     )
     last_published_version: Optional[TemplateVersion] = Relationship(
@@ -134,6 +135,7 @@ class Rule(SQLModel, table=True):
         sa_relationship_kwargs={
             "primaryjoin": "Rule.id==RuleVersion.rule_id",
             "foreign_keys": "RuleVersion.rule_id",
+            "cascade": "all, delete-orphan",
         },
     )
     last_published_version: Optional[RuleVersion] = Relationship(
