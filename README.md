@@ -2,6 +2,10 @@
 
 Full stack application for authoring, versioning, and publishing JFrog AppTrust templates and rules. Draft changes are stored locally with git-style version history, and only published versions are pushed to JFrog via the AppTrust REST APIs.
 
+## Screenshot
+
+![Application Screenshot](Screenshot.png)
+
 ## Features
 
 - FastAPI backend with SQLite storage and SQLModel ORM.
