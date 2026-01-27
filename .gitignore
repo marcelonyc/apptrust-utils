@@ -11,3 +11,4 @@ frontend/dist/
 .jfrog/
 envs/
 .DS_Store
+apptrust.db

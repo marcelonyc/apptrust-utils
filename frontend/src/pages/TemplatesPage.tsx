@@ -31,6 +31,29 @@ const extractParamsFromRego = (rego: string): string[] => {
     return Array.from(found);
 };
 
+/**
+ * Transforms a predicate JSON by extracting data.releaseBundleVersion.getVersion
+ * and wrapping it in { "data": ... }
+ */
+const transformPredicateData = (jsonString: string): string => {
+    try {
+        const parsed = JSON.parse(jsonString);
+
+        // Check if the structure matches data.releaseBundleVersion.getVersion
+        if (parsed?.data?.releaseBundleVersion?.getVersion) {
+            const extractedData = parsed.data.releaseBundleVersion.getVersion;
+            const transformed = { data: extractedData };
+            return JSON.stringify(transformed, null, 2);
+        }
+
+        // If structure doesn't match, return original
+        return jsonString;
+    } catch (error) {
+        // If JSON parsing fails, return original string
+        return jsonString;
+    }
+};
+
 const defaultTemplate: TemplatePayload = {
     name: "",
     description: "",
@@ -479,7 +502,10 @@ const TemplatesPage = () => {
                         <h3 style={{ margin: 0, fontSize: "16px" }}>Predicate / Attestation</h3>
                         <textarea
                             value={predicateText}
-                            onChange={(event) => setPredicateText(event.target.value)}
+                            onChange={(event) => {
+                                const transformedText = transformPredicateData(event.target.value);
+                                setPredicateText(transformedText);
+                            }}
                             placeholder="Paste predicate JSON here"
                             style={{ padding: "8px", borderRadius: "6px", border: "1px solid #cbd5f5", minHeight: "120px" }}
                         />
