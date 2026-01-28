@@ -521,14 +521,14 @@ const TemplatesPage = () => {
                         <RegoEditor value={formState.rego} onChange={(value) => setFormState({ ...formState, rego: value })} />
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <h3 style={{ margin: 0, fontSize: "16px" }}>Attestation (Exported from AppTrust)</h3>
+                        <h3 style={{ margin: 0, fontSize: "16px" }}>Evidence (Download from AppTrust)</h3>
                         <textarea
                             value={predicateText}
                             onChange={(event) => {
                                 const transformedText = transformPredicateData(event.target.value);
                                 setPredicateText(transformedText);
                             }}
-                            placeholder="Paste predicate JSON here"
+                            placeholder="Paste evidence JSON here"
                             style={{ padding: "8px", borderRadius: "6px", border: "1px solid #cbd5f5", minHeight: "120px" }}
                         />
                         {detectedParams.length > 0 && (
