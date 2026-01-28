@@ -61,6 +61,7 @@ class JFrogClient:
             "POST", "/unifiedpolicy/api/v1/templates", json=payload
         )
         data = self._payload_from_response(response)
+        print("Response:", response.text)
         if "id" not in data:
             location = response.headers.get("Location")
             if location:

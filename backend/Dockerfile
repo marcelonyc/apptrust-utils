@@ -29,10 +29,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --no-cache-dir .
+
 COPY ./pyproject.toml ./
 COPY ./app/ ./app/
 
-RUN pip install --no-cache-dir .
 
 EXPOSE 8000
 

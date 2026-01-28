@@ -14,6 +14,7 @@ import {
     publishTemplate,
     updateTemplate
 } from "../api/templates";
+import { listRules } from "../api/rules";
 import RegoEditor from "../components/RegoEditor";
 import EvalResultModal from "../components/EvalResultModal";
 import { evaluateRego } from "../api/validation";
@@ -211,6 +212,29 @@ const TemplatesPage = () => {
         }
     };
 
+    const handleDeleteTemplate = async (templateId: number) => {
+        try {
+            // Fetch all rules to check for dependencies
+            const rules = await listRules();
+            const dependentRules = rules.filter(rule => rule.template_id === templateId);
+
+            if (dependentRules.length > 0) {
+                const ruleNames = dependentRules.map(rule => `• ${rule.name}`).join("\n");
+                window.alert(
+                    `Cannot delete this template. It is currently used by ${dependentRules.length} rule(s):\n\n${ruleNames}\n\nPlease delete or reassign these rules before deleting the template.`
+                );
+                return;
+            }
+
+            // No dependencies, proceed with delete
+            if (window.confirm("Delete this template?")) {
+                deleteMutation.mutate(templateId);
+            }
+        } catch (error) {
+            window.alert("Failed to check template dependencies. Please try again.");
+        }
+    };
+
     const handleAddParameter = () => {
         setFormState((prev) => ({
             ...prev,
@@ -328,9 +352,7 @@ const TemplatesPage = () => {
                                     <button
                                         type="button"
                                         onClick={() => {
-                                            if (window.confirm("Delete this template?")) {
-                                                deleteMutation.mutate(template.id);
-                                            }
+                                            handleDeleteTemplate(template.id);
                                         }}
                                         style={{
                                             background: "#ef4444",
